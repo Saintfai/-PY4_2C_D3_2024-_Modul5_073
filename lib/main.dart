@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:logbook_app_073/features/onboarding/onboarding_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+// Import model dan halaman yang dibutuhkan
 import 'package:logbook_app_073/features/logbook/models/log_model.dart';
+import 'package:logbook_app_073/features/onboarding/onboarding_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // 1. Inisialisasi Environment & Localization
   await dotenv.load(fileName: ".env");
   await initializeDateFormatting('id_ID', null);
 
-  // 📦 INITIALIZE HIVE
+  // 2. Inisialisasi Hive (Local Persistence)
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(LogModelAdapter());
@@ -91,6 +95,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      // Memulai dari halaman onboarding → login → logbook
       home: const OnboardingView(),
     );
   }

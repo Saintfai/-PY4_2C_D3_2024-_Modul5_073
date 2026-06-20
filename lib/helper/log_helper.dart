@@ -9,7 +9,7 @@ class LogHelper {
     String source = "Unknown",
     int level = 2,
   }) async {
-    // 1️⃣ Filter konfigurasi ENV
+    // Ambil konfigurasi batas level log dari env
     final int configLevel = int.tryParse(dotenv.env['LOG_LEVEL'] ?? '2') ?? 2;
 
     final String muteList = dotenv.env['LOG_MUTE'] ?? '';
@@ -25,14 +25,13 @@ class LogHelper {
       String label = _getLabel(level);
       String color = _getColor(level);
 
-      // Log ke terminal (hanya jika level <= configLevel)
-      // Spesifikasi: log hanya muncul jika LOG_LEVEL disetel ke 3
+      // Log ke terminal jika level sesuai konfigurasi
       if (configLevel == 3) {
         dev.log(message, name: source, time: now, level: level * 100);
         print('$color[$timestamp] [$label] ($source): $message\x1B[0m');
       }
 
-      // 2️⃣ TULIS KE FILE
+      // Tulis ke file log
       await _logToFile(dateStamp, timestamp, label, source, message);
     } catch (e) {
       dev.log('Failed to write log: $e', name: 'LogHelper', level: 1000);

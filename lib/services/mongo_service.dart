@@ -9,7 +9,7 @@ class MongoService {
   DbCollection? _collection;
 
   Future<void> connect() async {
-    // 🛡️ Guard against accidental multiple connections
+    // Mencegah koneksi ganda
     if (_db != null) {
       if (_db!.state == State.open) return;
       if (_db!.state == State.opening) {
@@ -21,7 +21,7 @@ class MongoService {
       }
     }
 
-    // 🌐 Check Internet Connectivity
+    // Cek koneksi internet
     final connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult.contains(ConnectivityResult.none)) {
       await LogHelper.writeLog(
@@ -69,7 +69,7 @@ class MongoService {
     await _db?.close();
   }
 
-  // ✅ INSERT
+  // Menambahkan data log (Insert)
   Future<void> insertLog(LogModel log) async {
     if (_collection == null) {
       await LogHelper.writeLog(
@@ -88,7 +88,7 @@ class MongoService {
     );
   }
 
-  // ✅ GET ALL
+  // Mengambil semua data log (Get All)
   Future<List<LogModel>> getAllLogs() async {
     if (_collection == null) {
       await LogHelper.writeLog(
@@ -109,7 +109,7 @@ class MongoService {
     return data.map((e) => LogModel.fromMap(e)).toList();
   }
 
-  // ✅ UPDATE
+  // Memperbarui data log (Update)
   Future<void> updateLog(String id, LogModel log) async {
     if (_collection == null) {
       await LogHelper.writeLog(
@@ -132,7 +132,7 @@ class MongoService {
     );
   }
 
-  // ✅ DELETE
+  // Menghapus data log (Delete)
   Future<void> deleteLog(String id) async {
     if (_collection == null) {
       await LogHelper.writeLog(

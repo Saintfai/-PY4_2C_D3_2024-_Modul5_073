@@ -6,6 +6,7 @@ import 'package:logbook_app_073/features/logbook/widgets/log_card.dart';
 import 'package:logbook_app_073/features/logbook/widgets/log_empty_state.dart';
 import 'package:logbook_app_073/features/logbook/log_editor_page.dart';
 import 'package:logbook_app_073/services/access_policy.dart';
+import 'package:logbook_app_073/features/vision/vision_view.dart';
 
 // ────────────────────────────────────────────────────────────
 // LogView
@@ -172,6 +173,16 @@ class _LogViewState extends State<LogView> {
           ],
         ),
         actions: [
+          IconButton(
+            tooltip: 'Smart Patrol Vision',
+            icon: const Icon(Icons.camera_alt_rounded),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const VisionView()),
+              );
+            },
+          ),
           IconButton(
             icon: Badge(
               label: ValueListenableBuilder<List<LogModel>>(

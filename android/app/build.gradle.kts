@@ -39,6 +39,12 @@ android {
     }
 }
 
+dependencies {
+    implementation("androidx.concurrent:concurrent-futures:1.1.0")
+    // Menambahkan library jspecify yang dicari oleh sistem
+    implementation("org.jspecify:jspecify:1.0.0") 
+}
+
 flutter {
     source = "../.."
 }
